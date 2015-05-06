@@ -15,7 +15,7 @@
   ],
 
   "dashboards": [
-    { "name":"Process Stats", "layout": "d-w=4&d-h=2&d-pad=5&d-bg=none&d-g-CPU_PROCESS=0-0-1-1&d-g-MEM_PROCESS=0-1-1-1&d-sw-events=3-0-1-2&d-g-VMEM_PROCESS=1-0-1-1&d-g-RMEM_PROCESS=1-1-1-1&d-g-TIME_PROCESS=2-0-1-1" },
+    { "name":"Process Stats", "layout": "d-w=4&d-h=2&d-pad=5&d-bg=none&d-g-CPU_PROCESS=0-0-1-1&d-g-MEM_PROCESS=0-1-1-1&d-sw-events=3-0-1-2&d-g-VMEM_PROCESS=1-0-1-1&d-g-RMEM_PROCESS=1-1-1-1&d-g-TIME_PROCESS=2-0-1-1" }
   ],
   "paramArray" : { "itemTitle" : ["Name"], "schemaTitle" : "Match String"},
   "paramSchema" : [
