@@ -1,0 +1,17 @@
+{
+   "items": [
+      {
+         "name" : "PluginMgr",
+         "match": "pluginmgr"
+      },
+      {
+         "name" : "Plugin",
+         "match": "meter ----lua"
+      },
+      {
+         "name" : "Meter",
+         "match": "meter --b"
+      }
+   ],
+   "pollInterval": 1000
+}

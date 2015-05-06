@@ -1,0 +1,42 @@
+{
+  "description" : "Monitors the resource utilization of the specified processes",
+  "icon" : "icon.png",
+  "command" : "node index.js",
+  "command_lua" : "boundary-meter init.lua",
+  "postExtract" : "npm install",
+  "postExtract_lua" : "",    
+
+  "metrics" : [
+    "CPU_PROCESS",
+    "MEM_PROCESS",
+    "RMEM_PROCESS",
+    "VMEM_PROCESS",
+    "TIME_PROCESS"
+  ],
+
+    "paramArray" : { "itemTitle" : ["Name"], "schemaTitle" : "Match String"},
+    "paramSchema" : [
+        {
+            "title" : "Name",
+            "name" : "name",
+            "description" : "The name to use to describe the process(es) matched by the asscoaited match string",
+            "type" : "string",
+            "required" : false
+        },
+        {
+            "title": "Match",
+            "name": "match",
+            "description": "The regular expression to match when examining the process list",
+            "type": "string",
+            "required": true
+        },
+        {
+            "title" : "Poll Interval",
+            "name" : "pollInterval",
+            "description" : "The Poll Interval to send a ping to the host in milliseconds. Ex. 1000",
+            "type" : "number",
+            "default" : 1000,
+            "required" : false
+        }
+    ]
+}

@@ -1,0 +1,54 @@
+{
+    "result" : [
+        {
+            "name": "CPU_PROCESS",
+            "displayName": "Percent CPU Usage by Process",
+            "description": "The total percentage of CPU being consumed by the process referenced in the source",
+            "unit": "percent",
+            "displayNameShort": "%CPU Process",
+            "defaultResolutionMS": 0,
+            "isDisabled": 0,
+            "defaultAggregate": "avg"
+        },
+        {
+            "name": "MEM_PROCESS",
+            "displayName": "Percent Memory Usage by Process",
+            "description": "The total percentage of memory being consumed by the process referenced in the source",
+            "unit": "percent",
+            "displayNameShort": "%Mem Process",
+            "defaultResolutionMS": 0,
+            "isDisabled": 0,
+            "defaultAggregate": "avg"
+        },
+        {
+            "name": "RMEM_PROCESS",
+            "displayName": "Total Resident Memory by Process",
+            "description": "The total number of resident in-memory bytes being consumed by the process referenced in the source",
+            "unit": "bytecount",
+            "displayNameShort": "RMem Process",
+            "defaultResolutionMS": 0,
+            "isDisabled": 0,
+            "defaultAggregate": "max"
+        },
+        {
+            "name": "VMEM_PROCESS",
+            "displayName": "Total Virtual Memory by Process",
+            "description": "The total number of virtual memory bytes being consumed by the process referenced in the source",
+            "unit": "bytecount",
+            "displayNameShort": "VSZ Process",
+            "defaultResolutionMS": 0,
+            "isDisabled": 0,
+            "defaultAggregate": "max"
+        },
+        {
+            "name": "TIME_PROCESS",
+            "displayName": "CPU Time by Process",
+            "description": "The number of seconds that the process referenced in the source has consumed the CPU",
+            "unit": "duration",
+            "displayNameShort": "ProcTime",
+            "defaultResolutionMS": 0,
+            "isDisabled": 0,
+            "defaultAggregate": "max"
+        }
+    ]
+}
