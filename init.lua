@@ -96,15 +96,15 @@ function meterPlugin:onParseValues(data)
   for _, v in ipairs(data) do
     local metric = string.match(v.metric, '^(system%.meter%.cpu)$')
     if (metric) then
-      table.insert(result['CPU_PROCESS'], { value = v.value, source = meterPlugin.source .. '-Meter', timestamp = v.timestamp })
+      table.insert(result['CPU_PROCESS'], { value = v.value, source = meterPlugin.source .. '.Meter', timestamp = v.timestamp })
     end
     metric = string.match(v.metric, '^(system%.meter%.mem%.rss)$')
     if (metric) then
-      table.insert(result['RMEM_PROCESS'], { value = v.value, source = meterPlugin.source .. '-Meter', timestamp = v.timestamp })
+      table.insert(result['RMEM_PROCESS'], { value = v.value, source = meterPlugin.source .. '.Meter', timestamp = v.timestamp })
     end
     metric = string.match(v.metric, '^(system%.meter%.mem%.size)$')
     if (metric) then
-      table.insert(result['VMEM_PROCESS'], { value = v.value, source = meterPlugin.source .. '-Meter', timestamp = v.timestamp })
+      table.insert(result['VMEM_PROCESS'], { value = v.value, source = meterPlugin.source .. '.Meter', timestamp = v.timestamp })
     end
   end
     
