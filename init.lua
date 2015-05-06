@@ -5,6 +5,7 @@ local PollerCollection = framework.PollerCollection
 local DataSourcePoller = framework.DataSourcePoller
 local Plugin = framework.Plugin
 local os = require('os')
+local io = require('io')
 local table = require('table')
 local string = require('string')
 
@@ -124,8 +125,14 @@ function psPlugin:onParseValues(data)
     table.insert(result['MEM_PROCESS'], { value = v.mem, source = psPlugin.source .. "." .. v.name })
     table.insert(result['RMEM_PROCESS'], { value = v.rss, source = psPlugin.source .. "." .. v.name })
     table.insert(result['VMEM_PROCESS'], { value = v.vsz, source = psPlugin.source .. "." .. v.name })
-    local iM, iS, iPS = string.match(v.time, "(%d+):(%d+)%.(%d+)")
-    table.insert(result['TIME_PROCESS'], { value = iM*60+iS+iPS/100, source = psPlugin.source .. "." .. v.name })
+    if v.time then
+      local iM, iS, iPS = string.match(v.time, "(%d+):(%d+)%.(%d+)")
+      if iM and iS and iPS then
+        table.insert(result['TIME_PROCESS'], { value = iM*60+iS+iPS/100, source = psPlugin.source .. "." .. v.name })
+      else
+        io.stderr:write("Time value incorrectly formatted =>" .. v.time)
+      end
+    end
   end
   return result
 end
