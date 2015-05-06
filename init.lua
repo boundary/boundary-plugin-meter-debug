@@ -96,7 +96,7 @@ function meterPlugin:onParseValues(data)
   for _, v in ipairs(data) do
     local metric = string.match(v.metric, '^(system%.meter%.cpu)$')
     if (metric) then
-      table.insert(result['CPU_PROCESS'], { value = v.value, source = meterPlugin.source .. '.Meter', timestamp = v.timestamp })
+      table.insert(result['CPU_PROCESS'], { value = v.value/100, source = meterPlugin.source .. '.Meter', timestamp = v.timestamp })
     end
     metric = string.match(v.metric, '^(system%.meter%.mem%.rss)$')
     if (metric) then
@@ -121,8 +121,8 @@ function psPlugin:onParseValues(data)
 
   local values = parseOutput(self, data['output'])
   for _,v in pairs(values) do
-    table.insert(result['CPU_PROCESS'], { value = v.cpu, source = psPlugin.source .. "." .. v.name })
-    table.insert(result['MEM_PROCESS'], { value = v.mem, source = psPlugin.source .. "." .. v.name })
+    table.insert(result['CPU_PROCESS'], { value = v.cpu/100, source = psPlugin.source .. "." .. v.name })
+    table.insert(result['MEM_PROCESS'], { value = v.mem/100, source = psPlugin.source .. "." .. v.name })
     table.insert(result['RMEM_PROCESS'], { value = v.rss, source = psPlugin.source .. "." .. v.name })
     table.insert(result['VMEM_PROCESS'], { value = v.vsz, source = psPlugin.source .. "." .. v.name })
     if v.time then
