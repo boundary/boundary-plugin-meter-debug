@@ -132,7 +132,7 @@ function psPlugin:onParseValues(data)
       else
         iM, iS = string.match(v.time, "(%d+):(%d+)")
         if iM and iS then
-          table.insert(result['TIME_PROCESS'], { value = iM*60+iS+iPS/100, source = psPlugin.source .. "." .. v.name })
+          table.insert(result['TIME_PROCESS'], { value = iM*60+iS, source = psPlugin.source .. "." .. v.name })
         else
           io.stderr:write("Time value incorrectly formatted =>" .. v.time)
         end
