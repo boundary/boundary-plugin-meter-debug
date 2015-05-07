@@ -8,6 +8,7 @@ local os = require('os')
 local io = require('io')
 local table = require('table')
 local string = require('string')
+local pack = framework.util.pack
 
 local isEmpty = framework.string.isEmpty
 local clone = framework.table.clone
@@ -113,31 +114,31 @@ end
 
 function psPlugin:onParseValues(data) 
   local result = {}
-  result['CPU_PROCESS'] = {}
-  result['RMEM_PROCESS'] = {}
-  result['VMEM_PROCESS'] = {}
-  result['MEM_PROCESS'] = {}
-  result['TIME_PROCESS'] = {}
 
   local values = parseOutput(self, data['output'])
-  for _,v in pairs(values) do
-    table.insert(result['CPU_PROCESS'], { value = v.cpu/100, source = psPlugin.source .. "." .. v.name })
-    table.insert(result['MEM_PROCESS'], { value = v.mem/100, source = psPlugin.source .. "." .. v.name })
-    table.insert(result['RMEM_PROCESS'], { value = v.rss, source = psPlugin.source .. "." .. v.name })
-    table.insert(result['VMEM_PROCESS'], { value = v.vsz, source = psPlugin.source .. "." .. v.name })
-    if v.time then
-      local iM, iS, iPS = string.match(v.time, "(%d+):(%d+)%.(%d+)")
-      if iM and iS and iPS then
-        table.insert(result['TIME_PROCESS'], { value = (iM*60+iS+iPS/100)*1000, source = psPlugin.source .. "." .. v.name })
-      else
-        iM, iS = string.match(v.time, "(%d+):(%d+)")
-        if iM and iS then
-          table.insert(result['TIME_PROCESS'], { value = (iM*60+iS)*1000, source = psPlugin.source .. "." .. v.name })
+  
+  if values then
+    for _,v in pairs(values) do
+      table.insert(result, pack('CPU_PROCESS', v.cpu/100, nil, psPlugin.source .. "." .. v.name))
+      table.insert(result, pack('MEM_PROCESS', v.mem/100, nil, psPlugin.source .. "." .. v.name))
+      table.insert(result, pack('RMEM_PROCESS', v.rss, nil, psPlugin.source .. "." .. v.name))
+      table.insert(result, pack('VMEM_PROCESS', v.vsz, nil, psPlugin.source .. "." .. v.name))
+      if v.time then
+        local iM, iS, iPS = string.match(v.time, "(%d+):(%d+)%.(%d+)")
+        if iM and iS and iPS then
+          table.insert(result, pack('TIME_PROCESS', (iM*60+iS+iPS/100)*1000, psPlugin.source .. "." .. v.name))
         else
-          io.stderr:write("Time value incorrectly formatted =>" .. v.time)
+          iM, iS = string.match(v.time, "(%d+):(%d+)")
+          if iM and iS then
+            table.insert(result, pack('TIME_PROCESS', (iM*60+iS)*1000, psPlugin.source .. "." .. v.name))
+          else
+            io.stderr:write("Time value incorrectly formatted =>" .. v.time)
+          end
         end
       end
     end
+  else
+    psPlugin:printEvent("error", "Parsed [" .. data['output'] .. "] to nil")
   end
   return result
 end
