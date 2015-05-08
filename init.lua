@@ -96,8 +96,8 @@ function psPlugin:onParseValues(data)
     for _,v in pairs(values) do
       table.insert(result, pack('CPU_PROCESS', v.cpu/100, nil, psPlugin.source .. "." .. v.name))
       table.insert(result, pack('MEM_PROCESS', v.mem/100, nil, psPlugin.source .. "." .. v.name))
-      table.insert(result, pack('RMEM_PROCESS', v.rss, nil, psPlugin.source .. "." .. v.name))
-      table.insert(result, pack('VMEM_PROCESS', v.vsz, nil, psPlugin.source .. "." .. v.name))
+      table.insert(result, pack('RMEM_PROCESS', v.rss*1024, nil, psPlugin.source .. "." .. v.name))
+      table.insert(result, pack('VMEM_PROCESS', v.vsz*1024, nil, psPlugin.source .. "." .. v.name))
       if v.time then
         local iM, iS, iPS = string.match(v.time, "(%d+):(%d+)%.(%d+)")
         if iM and iS and iPS then
