@@ -66,7 +66,8 @@ local function parseOutput(context, output)
       end
       for _, item in ipairs(items) do
         if process_list_item.command:match(item.match) then
-          process_list_item.name = item.name or item.match
+          process_list_item.name = process_list_item.command:match('^([^%s/]+)%s') or process_list_item.command:match('^[^%s]*/([^%s/]+)%s')
+          process_list_item.name = process_list_item.name or item.name or item.match
           table.insert(result, process_list_item)
         end
       end
