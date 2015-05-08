@@ -128,7 +128,7 @@ function meterPlugin:onParseValues(data)
   for _, v in ipairs(data) do
     local _, metric = string.match(v.metric, '^(system%.meter%.)(.*)$')
     if (metric == "cpu") then
-      table.insert(result, pack('CPU_PROCESS', v.value/100, v.timestamp, meterPlugin.source .. '.Meter'))
+      table.insert(result, pack('CPU_PROCESS', v.value, v.timestamp, meterPlugin.source .. '.Meter'))
     elseif (metric == "mem.rss") then
       table.insert(result, pack('RMEM_PROCESS', v.value, v.timestamp, meterPlugin.source .. '.Meter'))
     elseif (metric == "mem.size") then
