@@ -38,6 +38,7 @@ local function parseOutput(context, output)
     return
   end
 
+  local items = context.items or {}
   local procs = {}
   local result = {}
   for _, proc in ipairs(framework.string.split(output, '\n')) do
@@ -63,7 +64,7 @@ local function parseOutput(context, output)
       for i=1, cmdcol-1 do
         process_list_item[columns[i]] = proc[i]
       end
-      for _, item in ipairs(params.items) do
+      for _, item in ipairs(items) do
         if process_list_item.command:match(item.match) then
           process_list_item.name = item.name or item.match
           table.insert(result, process_list_item)
@@ -84,39 +85,13 @@ end
 local ps_data_source = CommandOutputDataSource:new(ps_command)
 
 local psPlugin = Plugin:new(params, ps_data_source)
-
-params.name = 'Boundary Meter Monitor Plugin'
-local meterPlugin = Plugin:new(params, meter_data_source)
-
-function meterPlugin:onParseValues(data)
-  local result = {}
-  result['CPU_PROCESS'] = {}
-  result['VMEM_PROCESS'] = {}
-  result['RMEM_PROCESS'] = {}
-    
-  for _, v in ipairs(data) do
-    local metric = string.match(v.metric, '^(system%.meter%.cpu)$')
-    if (metric) then
-      table.insert(result['CPU_PROCESS'], { value = v.value/100, source = meterPlugin.source .. '.Meter', timestamp = v.timestamp })
-    end
-    metric = string.match(v.metric, '^(system%.meter%.mem%.rss)$')
-    if (metric) then
-      table.insert(result['RMEM_PROCESS'], { value = v.value, source = meterPlugin.source .. '.Meter', timestamp = v.timestamp })
-    end
-    metric = string.match(v.metric, '^(system%.meter%.mem%.size)$')
-    if (metric) then
-      table.insert(result['VMEM_PROCESS'], { value = v.value, source = meterPlugin.source .. '.Meter', timestamp = v.timestamp })
-    end
-  end
-    
-  return result
-end
+psPlugin.items = params.items
 
 function psPlugin:onParseValues(data) 
   local result = {}
 
   local values = parseOutput(self, data['output'])
-  
+
   if values then
     for _,v in pairs(values) do
       table.insert(result, pack('CPU_PROCESS', v.cpu/100, nil, psPlugin.source .. "." .. v.name))
@@ -143,5 +118,35 @@ function psPlugin:onParseValues(data)
   return result
 end
 
-meterPlugin:run()
+
+params.name = 'Boundary Meter Monitor Plugin'
+local meterPlugin = Plugin:new(params, meter_data_source)
+
+function meterPlugin:onParseValues(data)
+  local result = {}
+
+  for _, v in ipairs(data) do
+    local _, metric = string.match(v.metric, '^(system%.meter%.)(.*)$')
+    if (metric == "cpu") then
+      table.insert(result, pack('CPU_PROCESS', v.value/100, v.timestamp, meterPlugin.source .. '.Meter'))
+    elseif (metric == "mem.rss") then
+      table.insert(result, pack('RMEM_PROCESS', v.value, v.timestamp, meterPlugin.source .. '.Meter'))
+    elseif (metric == "mem.size") then
+      table.insert(result, pack('VMEM_PROCESS', v.value, v.timestamp, meterPlugin.source .. '.Meter'))
+    else
+        _, metric, params = string.match(metric, '^(hlm%.time_ms)(.*)|(.*)$')
+        if (metric == ".interval") then
+          _, metric = string.match(params, '^(metric=)(.*)$')
+          table.insert(result, pack('INTERVAL_' .. string.upper(metric), v.value, v.timestamp, meterPlugin.source .. '.Meter'))
+        elseif (metric == "" or metric == nil) then
+          _, period, _, metric = string.match(params, '^(period=)(.*)%&(metric=)(.*)$')
+          table.insert(result, pack(string.upper(metric) .. "_" .. string.upper(period), v.value, v.timestamp, meterPlugin.source .. '.Meter'))
+        end
+    end
+  end
+
+  return result
+end
+
 psPlugin:run()
+meterPlugin:run()
