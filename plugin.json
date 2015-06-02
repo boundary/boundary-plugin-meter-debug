@@ -67,7 +67,7 @@
       "layout": "d-w=4&d-h=3&d-pad=5&d-bg=none&d-g-GLOBAL_ONE_MIN=1-0-1-1-t&d-g-PROC_ONE_MIN=1-0-1-1-b&d-g-CPU_ONE_MIN=1-1-1-1-t&d-g-MEM_ONE_MIN=1-1-1-1-b&d-g-FLOW_ONE_MIN=1-2-1-1-t&d-g-OS_ONE_MIN=1-2-1-1-b&d-g-GLOBAL_FIVE_MIN=2-0-1-1-t&d-g-PROC_FIVE_MIN=2-0-1-1-b&d-g-INTERVAL_GLOBAL=3-0-1-1-t&d-g-INTERVAL_PROC=3-0-1-1-b&d-g-CPU_FIVE_MIN=2-1-1-1-t&d-g-MEM_FIVE_MIN=2-1-1-1-b&d-g-FLOW_FIVE_MIN=2-2-1-1-t&d-g-OS_FIVE_MIN=2-2-1-1-b&d-g-INTERVAL_CPU=3-1-1-1-t&d-g-INTERVAL_MEM=3-1-1-1-b&d-g-INTERVAL_FLOW=3-2-1-1-t&d-g-INTERVAL_OS=3-2-1-1-b&d-g-CPU_PROCESS=0-0-1-1-t&d-g-MEM_PROCESS=0-0-1-1-b&d-g-TIME_PROCESS=0-2-1-1&d-g-RMEM_PROCESS=0-1-1-1-t&d-g-VMEM_PROCESS=0-1-1-1-b"
     }
   ],
-  "paramArray" : { "itemTitle" : ["match"], "schemaTitle" : "Match String"},
+  "paramArray" : { "itemTitle" : ["Name", "match"], "schemaTitle" : "Match String"},
   "paramSchema" : [
     {
       "title" : "Name",
