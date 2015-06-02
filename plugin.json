@@ -1,4 +1,7 @@
 {
+  "name" : "Boundary Process CPU/Mem Plugin",
+  "version" : "1.1",
+  "tags" : "ps",
   "description" : "Monitors the resource utilization of the specified processes",
   "icon" : "icon.png",
   "command" : "node index.js",

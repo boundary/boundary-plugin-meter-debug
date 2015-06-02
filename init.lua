@@ -29,7 +29,7 @@ local ps_command = commands[string.lower(os.type())]
 if ps_command == nil then
   local name = framework.plugin_params.name or params.name
   local version = framework.plugin_params.version or params.version
-  local msg = Plugin.formatMessage(name, version, "Your platform does not support ps. Only Meter metrics will be gathered")
+  local msg = Plugin.formatMessage(name, version, os.hostname() .. " ps Command Missing", os.hostname(), os.hostname(), "Your platform does not support ps. Only Meter metrics will be gathered")
   local tags = Plugin.formatTags(framework.plugin_params.tags or params.tags)
   print(framework.util.eventString('warn', msg, tags))
 end
@@ -91,6 +91,11 @@ end
 if ps_command ~= nil then
   local ps_data_source = CommandOutputDataSource:new(ps_command)
 
+  if framework.plugin_params then
+    framework.plugin_params.name = 'Boundary ps aux Monitor Plugin'
+  else
+    params.name = 'Boundary ps aux Monitor Plugin'
+  end
   local psPlugin = Plugin:new(params, ps_data_source)
   psPlugin.items = params.items
 
@@ -128,7 +133,11 @@ if ps_command ~= nil then
   psPlugin:run()
 end
 
-params.name = 'Boundary Meter Monitor Plugin'
+if framework.plugin_params then
+  framework.plugin_params.name = 'Boundary Meter Monitor Plugin'
+else
+  params.name = 'Boundary Meter Monitor Plugin'
+end
 local meterPlugin = Plugin:new(params, meter_data_source)
 
 function meterPlugin:onParseValues(data)
