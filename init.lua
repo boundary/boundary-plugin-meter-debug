@@ -13,10 +13,12 @@ local pack = framework.util.pack
 local isEmpty = framework.string.isEmpty
 local clone = framework.table.clone
 
-local params = framework.params 
-params.name = 'Boundary Process CPU/Mem Plugin'
-params.version = '1.1'
-params.tags = "ps"
+local params = framework.params
+if framework.plugin_params.name == nil then
+  params.name = 'Boundary Process CPU/Mem Plugin'
+  params.version = '1.1'
+  params.tags = "ps"
+end
 
 local commands = {
   linux = { path = '/bin/ps', args = {'aux'} },
@@ -25,8 +27,11 @@ local commands = {
 
 local ps_command = commands[string.lower(os.type())] 
 if ps_command == nil then
-  print("_bevent:"..(Plugin.name or params.name)..":"..(Plugin.version or params.version)..":Your platform is not supported.  We currently support Linux, Windows and OSX|t:error|tags:lua,plugin"..(Plugin.tags and framework.string.concat(Plugin.tags, ',') or params.tags))
-  process:exit(-1)
+  local name = framework.plugin_params.name or params.name
+  local version = framework.plugin_params.version or params.version
+  local msg = Plugin.formatMessage(name, version, "Your platform does not support ps. Only Meter metrics will be gathered")
+  local tags = Plugin.formatTags(framework.plugin_params.tags or params.tags)
+  print(framework.util.eventString('warn', msg, tags))
 end
 
 local function parseOutput(context, output) 
@@ -83,42 +88,45 @@ function meter_data_source:onFetch(socket)
   socket:write(self:queryMetricCommand({match = 'system.meter'}))
 end
 
-local ps_data_source = CommandOutputDataSource:new(ps_command)
+if ps_command ~= nil then
+  local ps_data_source = CommandOutputDataSource:new(ps_command)
 
-local psPlugin = Plugin:new(params, ps_data_source)
-psPlugin.items = params.items
+  local psPlugin = Plugin:new(params, ps_data_source)
+  psPlugin.items = params.items
 
-function psPlugin:onParseValues(data) 
-  local result = {}
+  function psPlugin:onParseValues(data) 
+    local result = {}
 
-  local values = parseOutput(self, data['output'])
+    local values = parseOutput(self, data['output'])
 
-  if values then
-    for _,v in pairs(values) do
-      table.insert(result, pack('CPU_PROCESS', v.cpu/100, nil, psPlugin.source .. "." .. v.name))
-      table.insert(result, pack('MEM_PROCESS', v.mem/100, nil, psPlugin.source .. "." .. v.name))
-      table.insert(result, pack('RMEM_PROCESS', v.rss*1024, nil, psPlugin.source .. "." .. v.name))
-      table.insert(result, pack('VMEM_PROCESS', v.vsz*1024, nil, psPlugin.source .. "." .. v.name))
-      if v.time then
-        local iM, iS, iPS = string.match(v.time, "(%d+):(%d+)%.(%d+)")
-        if iM and iS and iPS then
-          table.insert(result, pack('TIME_PROCESS', (iM*60+iS+iPS/100)*1000, nil, psPlugin.source .. "." .. v.name))
-        else
-          iM, iS = string.match(v.time, "(%d+):(%d+)")
-          if iM and iS then
-            table.insert(result, pack('TIME_PROCESS', (iM*60+iS)*1000, nil, psPlugin.source .. "." .. v.name))
+    if values then
+      for _,v in pairs(values) do
+        table.insert(result, pack('CPU_PROCESS', v.cpu/100, nil, psPlugin.source .. "." .. v.name))
+        table.insert(result, pack('MEM_PROCESS', v.mem/100, nil, psPlugin.source .. "." .. v.name))
+        table.insert(result, pack('RMEM_PROCESS', v.rss*1024, nil, psPlugin.source .. "." .. v.name))
+        table.insert(result, pack('VMEM_PROCESS', v.vsz*1024, nil, psPlugin.source .. "." .. v.name))
+        if v.time then
+          local iM, iS, iPS = string.match(v.time, "(%d+):(%d+)%.(%d+)")
+          if iM and iS and iPS then
+            table.insert(result, pack('TIME_PROCESS', (iM*60+iS+iPS/100)*1000, nil, psPlugin.source .. "." .. v.name))
           else
-            io.stderr:write("Time value incorrectly formatted =>" .. v.time)
+            iM, iS = string.match(v.time, "(%d+):(%d+)")
+            if iM and iS then
+              table.insert(result, pack('TIME_PROCESS', (iM*60+iS)*1000, nil, psPlugin.source .. "." .. v.name))
+            else
+              io.stderr:write("Time value incorrectly formatted =>" .. v.time)
+            end
           end
         end
       end
+    else
+      psPlugin:printEvent("error", "Parsed [" .. data['output'] .. "] to nil")
     end
-  else
-    psPlugin:printEvent("error", "Parsed [" .. data['output'] .. "] to nil")
+    return result
   end
-  return result
-end
 
+  psPlugin:run()
+end
 
 params.name = 'Boundary Meter Monitor Plugin'
 local meterPlugin = Plugin:new(params, meter_data_source)
@@ -149,5 +157,4 @@ function meterPlugin:onParseValues(data)
   return result
 end
 
-psPlugin:run()
 meterPlugin:run()
