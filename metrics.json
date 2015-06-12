@@ -1,54 +1,407 @@
 {
-    "result" : [
-        {
-            "name": "CPU_PROCESS",
-            "displayName": "Percent CPU Usage by Process",
-            "description": "The total percentage of CPU being consumed by the process referenced in the source",
-            "unit": "percent",
-            "displayNameShort": "%CPU Process",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "MEM_PROCESS",
-            "displayName": "Percent Memory Usage by Process",
-            "description": "The total percentage of memory being consumed by the process referenced in the source",
-            "unit": "percent",
-            "displayNameShort": "%Mem Process",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "avg"
-        },
-        {
-            "name": "RMEM_PROCESS",
-            "displayName": "Total Resident Memory by Process",
-            "description": "The total number of resident in-memory bytes being consumed by the process referenced in the source",
-            "unit": "bytecount",
-            "displayNameShort": "RMem Process",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "max"
-        },
-        {
-            "name": "VMEM_PROCESS",
-            "displayName": "Total Virtual Memory by Process",
-            "description": "The total number of virtual memory bytes being consumed by the process referenced in the source",
-            "unit": "bytecount",
-            "displayNameShort": "VSZ Process",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "max"
-        },
-        {
-            "name": "TIME_PROCESS",
-            "displayName": "CPU Time by Process",
-            "description": "The number of seconds that the process referenced in the source has consumed the CPU",
-            "unit": "duration",
-            "displayNameShort": "ProcTime",
-            "defaultResolutionMS": 0,
-            "isDisabled": 0,
-            "defaultAggregate": "max"
-        }
-    ]
+  "CPU_PROCESS" : {
+    "displayName": "Percent CPU Usage by Process",
+    "description": "The total percentage of CPU being consumed by the process referenced in the source",
+    "unit": "percent",
+    "displayNameShort": "%CPU Process",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "CPU_ONE_MIN" : {
+    "displayName": "1 Min Avg CPU Collection",
+    "description": "The 1 minute rolling average of the time to collect the CPU metrics",
+    "unit": "duration",
+    "displayNameShort": "1MinCPU",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "CPU_FIVE_MIN" : {
+    "displayName": "5 Min Avg CPU Collection",
+    "description": "The 5 minute rolling average of the time to collect the CPU metrics",
+    "unit": "duration",
+    "displayNameShort": "5MinCPU",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "CPU_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg CPU Collection",
+    "description": "The 15 minute rolling average of the time to collect the CPU metrics",
+    "unit": "duration",
+    "displayNameShort": "15MinCPU",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "FILE_ONE_MIN" : {
+    "displayName": "1 Min Avg File Collection",
+    "description": "The 1 minute rolling average of the time to collect the file usage metrics",
+    "unit": "duration",
+    "displayNameShort": "1MinFile",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "FILE_FIVE_MIN" : {
+    "displayName": "5 Min Avg File Collection",
+    "description": "The 5 minute rolling average of the time to collect the file usage metrics",
+    "unit": "duration",
+    "displayNameShort": "5MinFile",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "FILE_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg File Collection",
+    "description": "The 15 minute rolling average of the time to collect the file usage metrics",
+    "unit": "duration",
+    "displayNameShort": "15MinFile",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "FLOW_ONE_MIN" : {
+    "displayName": "1 Min Avg Flow Collection",
+    "description": "The 1 minute rolling average of the time to collect the flow data",
+    "unit": "duration",
+    "displayNameShort": "1MinFlow",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "FLOW_FIVE_MIN" : {
+    "displayName": "5 Min Avg Flow Collection",
+    "description": "The 5 minute rolling average of the time to collect the flow data",
+    "unit": "duration",
+    "displayNameShort": "5MinFlow",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "FLOW_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg Flow Collection",
+    "description": "The 15 minute rolling average of the time to collect the flow data",
+    "unit": "duration",
+    "displayNameShort": "15MinFlow",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "GLOBAL_ONE_MIN" : {
+    "displayName": "1 Min Avg Global Collection",
+    "description": "The 1 minute rolling average of the time to collect all the metrics",
+    "unit": "duration",
+    "displayNameShort": "1MinGlobal",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "GLOBAL_FIVE_MIN" : {
+    "displayName": "5 Min Avg Global Collection",
+    "description": "The 5 minute rolling average of the time to collect all the metrics",
+    "unit": "duration",
+    "displayNameShort": "5MinGlobal",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "GLOBAL_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg Global Collection",
+    "description": "The 15 minute rolling average of the time to collect all the metrics",
+    "unit": "duration",
+    "displayNameShort": "15MinGlobal",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "MEM_ONE_MIN" : {
+    "displayName": "1 Min Avg Mem Collection",
+    "description": "The 1 minute rolling average of the time to collect the memory metrics",
+    "unit": "duration",
+    "displayNameShort": "1MinMem",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "MEM_FIVE_MIN" : {
+    "displayName": "5 Min Avg Mem Collection",
+    "description": "The 5 minute rolling average of the time to collect the memory metrics",
+    "unit": "duration",
+    "displayNameShort": "5MinMem",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "MEM_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg Mem Collection",
+    "description": "The 15 minute rolling average of the time to collect the memory metrics",
+    "unit": "duration",
+    "displayNameShort": "15MinMem",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "NET_ONE_MIN" : {
+    "displayName": "1 Min Avg Net Collection",
+    "description": "The 1 minute rolling average of the time to collect the network interface metrics",
+    "unit": "duration",
+    "displayNameShort": "1MinNet",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "NET_FIVE_MIN" : {
+    "displayName": "5 Min Avg Net Collection",
+    "description": "The 5 minute rolling average of the time to collect the network interface metrics",
+    "unit": "duration",
+    "displayNameShort": "5MinNet",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "NET_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg Net Collection",
+    "description": "The 15 minute rolling average of the time to collect the network interface metrics",
+    "unit": "duration",
+    "displayNameShort": "15MinNet",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "OS_ONE_MIN" : {
+    "displayName": "1 Min Avg OS Collection",
+    "description": "The 1 minute rolling average of the time to collect the OS metrics",
+    "unit": "duration",
+    "displayNameShort": "1MinOS",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "OS_FIVE_MIN" : {
+    "displayName": "5 Min Avg OS Collection",
+    "description": "The 5 minute rolling average of the time to collect the OS metrics",
+    "unit": "duration",
+    "displayNameShort": "5MinOS",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "OS_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg OS Collection",
+    "description": "The 15 minute rolling average of the time to collect the OS metrics",
+    "unit": "duration",
+    "displayNameShort": "15MinOS",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "PROC_ONE_MIN" : {
+    "displayName": "1 Min Avg Proc Collection",
+    "description": "The 1 minute rolling average of the time to collect the process metrics",
+    "unit": "duration",
+    "displayNameShort": "1MinProc",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "PROC_FIVE_MIN" : {
+    "displayName": "5 Min Avg Proc Collection",
+    "description": "The 5 minute rolling average of the time to collect the process metrics",
+    "unit": "duration",
+    "displayNameShort": "5MinProc",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "PROC_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg Proc Collection",
+    "description": "The 15 minute rolling average of the time to collect the process metrics",
+    "unit": "duration",
+    "displayNameShort": "15MinProc",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "SWAP_ONE_MIN" : {
+    "displayName": "1 Min Avg Swap Collection",
+    "description": "The 1 minute rolling average of the time to collect the swap space metrics",
+    "unit": "duration",
+    "displayNameShort": "1MinSwap",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "SWAP_FIVE_MIN" : {
+    "displayName": "5 Min Avg Swap Collection",
+    "description": "The 5 minute rolling average of the time to collect the swap space metrics",
+    "unit": "duration",
+    "displayNameShort": "5MinSwap",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "SWAP_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg Swap Collection",
+    "description": "The 15 minute rolling average of the time to collect the swap space metrics",
+    "unit": "duration",
+    "displayNameShort": "15MinSwap",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "USER_ONE_MIN" : {
+    "displayName": "1 Min Avg User Collection",
+    "description": "The 1 minute rolling average of the time to collect the user metrics",
+    "unit": "duration",
+    "displayNameShort": "1MinUser",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "USER_FIVE_MIN" : {
+    "displayName": "5 Min Avg User Collection",
+    "description": "The 5 minute rolling average of the time to collect the user metrics",
+    "unit": "duration",
+    "displayNameShort": "5MinUser",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "USER_FIFTEEN_MIN" : {
+    "displayName": "15 Min Avg User Collection",
+    "description": "The 15 minute rolling average of the time to collect the user metrics",
+    "unit": "duration",
+    "displayNameShort": "15MinUser",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "MEM_PROCESS" : {
+    "displayName": "Percent Memory Usage by Process",
+    "description": "The total percentage of memory being consumed by the process referenced in the source",
+    "unit": "percent",
+    "displayNameShort": "%Mem Process",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "avg"
+  },
+  "RMEM_PROCESS" : {
+    "displayName": "Total Resident Memory by Process",
+    "description": "The total number of resident in-memory bytes being consumed by the process referenced in the source",
+    "unit": "bytecount",
+    "displayNameShort": "RMem Process",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "VMEM_PROCESS" : {
+    "displayName": "Total Virtual Memory by Process",
+    "description": "The total number of virtual memory bytes being consumed by the process referenced in the source",
+    "unit": "bytecount",
+    "displayNameShort": "VSZ Process",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_CPU" : {
+    "displayName": "CPU Interval",
+    "description": "The interval that the meter is using to capture CPU metrics",
+    "unit": "duration",
+    "displayNameShort": "CPUInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_FILE" : {
+    "displayName": "File Interval",
+    "description": "The interval that the meter is using to capture metrics about file usage",
+    "unit": "duration",
+    "displayNameShort": "FileInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_FLOW" : {
+    "displayName": "Flow Data Interval",
+    "description": "The interval that the meter is using to capture flow data",
+    "unit": "duration",
+    "displayNameShort": "FlowInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_GLOBAL" : {
+    "displayName": "Global Interval",
+    "description": "The interval that the meter is using to generally capture metrics",
+    "unit": "duration",
+    "displayNameShort": "GlobalInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_MEM" : {
+    "displayName": "Memory Interval",
+    "description": "The interval that the meter is using to capture memory metrics",
+    "unit": "duration",
+    "displayNameShort": "MemInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_NET" : {
+    "displayName": "Network Interval",
+    "description": "The interval that the meter is using to capture network interface metrics",
+    "unit": "duration",
+    "displayNameShort": "NetInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_OS" : {
+    "displayName": "OS Interval",
+    "description": "The interval that the meter is using to capture metrics about the os",
+    "unit": "duration",
+    "displayNameShort": "OSInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_PROC" : {
+    "displayName": "Process Interval",
+    "description": "The interval that the meter is using to capture metrics about the processes",
+    "unit": "duration",
+    "displayNameShort": "ProcInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_SWAP" : {
+    "displayName": "Swap Interval",
+    "description": "The interval that the meter is using to capture metrics about swap space",
+    "unit": "duration",
+    "displayNameShort": "SwapInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "INTERVAL_USER" : {
+    "displayName": "User Interval",
+    "description": "The interval that the meter is using to capture metrics about the user",
+    "unit": "duration",
+    "displayNameShort": "UserInt",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  },
+  "TIME_PROCESS" : {
+    "displayName": "CPU Time by Process",
+    "description": "The number of seconds that the process referenced in the source has consumed the CPU",
+    "unit": "duration",
+    "displayNameShort": "ProcTime",
+    "defaultResolutionMS": 0,
+    "isDisabled": 0,
+    "defaultAggregate": "max"
+  }
 }
