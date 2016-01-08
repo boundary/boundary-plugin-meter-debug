@@ -7,10 +7,7 @@
   "description" : "Monitors the resource utilization of the specified processes",
   "icon" : "icon.png",
   "command" : "boundary-meter init.lua",
-  "command_lua" : "boundary-meter init.lua",
   "postExtract" : "",
-  "postExtract_lua" : "",    
-
   "metrics" : [
     "CPU_PROCESS",
     "CPU_ONE_MIN",
