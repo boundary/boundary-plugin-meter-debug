@@ -1,6 +1,7 @@
 {
   "name" : "Boundary Meter Debug Plugin",
   "version" : "0.9.0",
+  "unsupportedPlatforms" : [ ],
   "meterVersionRequired" : "4.2.0-611",
   "tags" : "ps,meter",
   "description" : "Monitors the resource utilization of the specified processes",
