@@ -6,7 +6,7 @@
   "tags" : "ps,meter",
   "description" : "Monitors the resource utilization of the specified processes",
   "icon" : "icon.png",
-  "command" : "",
+  "command" : "boundary-meter init.lua",
   "command_lua" : "boundary-meter init.lua",
   "postExtract" : "",
   "postExtract_lua" : "",    
